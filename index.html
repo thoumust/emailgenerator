@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Generator</title>
+    <style>
+            * {
+            font-family: "Poppins", sans-serif;
+        }
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            font-family: inherit;
+            gap: 10px;
+            padding-inline: 2em;
+            padding-bottom: 0.4em;
+            background-color: #fff;
+            border-radius: 20px;
+        }
+
+        .form-heading {
+            text-align: center;
+            margin: 2em;
+            color: #0f0f0f;
+            font-size: 1.2em;
+            background-color: transparent;
+            align-self: center;
+        }
+
+        .form-field {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5em;
+            border-radius: 10px;
+            padding: 0.6em;
+            border: none;
+            outline: none;
+            color: rgb(0, 0, 0);
+            background-color: #e6e6e6;
+            box-shadow: inset 2px 5px 10px rgb(231, 231, 231);
+        }
+
+        .input-field {
+            background: none;
+            border: none;
+            outline: none;
+            width: 100%;
+            color: #000;
+            padding-inline: 1em;
+        }
+
+        .sendMessage-btn {
+            cursor: pointer;
+            margin-bottom: 3em;
+            padding: 1em;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            color: #000;
+            font-weight: bold;
+            outline: 1px solid #004635;
+            transition: all ease-in-out 0.3s;
+        }
+
+        .sendMessage-btn:hover {
+            transition: all ease-in-out 0.3s;
+            background-color: #004635;
+            color: #000;
+            cursor: pointer;
+            box-shadow: inset 2px 5px 10px rgb(209, 209, 209);
+        }
+
+        #result {
+            color: #000;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 6px 6px 10px rgba(230, 230, 230, 0.7),
+                        -1px -1px 10px rgba(196, 196, 196, 0.6);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <div class="form-heading">Generate Random Emails</div>
+        <div class="form-field">
+            <input type="number" class="input-field" id="letterCount" placeholder="Number of Characters in Each Email">
+        </div>
+        <div class="form-field">
+            <input type="number" class="input-field" id="emailCount" placeholder="Number of Emails">
+        </div>
+        <button class="sendMessage-btn" id="generate">Generate</button>
+        <button class="sendMessage-btn" id="copy">Copy</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('generate').addEventListener('click', function() {
+            const letters = 'A1B2C3D4E5F6G7H8I9J0KLMNOPQRSTUVWXYZ0123456789';
+            const emailCount = parseInt(document.getElementById('emailCount').value) || 1;
+            const letterCount = parseInt(document.getElementById('letterCount').value) || 5;
+            const domain = '@i09mochi.store';
+            let allEmails = '';
+
+            for(let e = 0; e < emailCount; e++) {
+                let email = '';
+                for(let i = 0; i < letterCount; i++) {
+                    const randomCharacter = letters[Math.floor(Math.random() * letters.length)];
+                    email += randomCharacter;
+                }
+                allEmails += `${email.toLowerCase()}${domain}<br>`;
+            }
+
+            document.getElementById('result').innerHTML = allEmails;
+        });
+
+        document.getElementById('copy').addEventListener('click', function() {
+            const resultText = document.getElementById('result').innerText;
+            navigator.clipboard.writeText(resultText).then(function() {
+                alert('Copied to clipboard');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        });
+    </script>
+</body>
+</html>
